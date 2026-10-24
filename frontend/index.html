@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Booking System</title>
+  <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+      <span class="navbar-brand fw-bold">🎬 Movie Booking</span>
+      <div class="d-flex align-items-center gap-2">
+        <span id="userInfo" class="text-light small"></span>
+        <button id="logoutBtn" class="btn btn-outline-light btn-sm d-none">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    <div id="alertBox"></div>
+
+    <section id="loginSection" class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="card shadow border-0">
+          <div class="card-body p-4">
+            <h2 class="mb-1">Welcome</h2>
+            <p class="text-muted mb-4">Login to book movies or manage theater movies.</p>
+            <form id="loginForm">
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input id="email" type="email" class="form-control" required placeholder="user@test.com">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input id="password" type="password" class="form-control" required placeholder="user123">
+              </div>
+              <button class="btn btn-primary w-100">Login</button>
+            </form>
+            <div class="demo-box mt-4">
+              <strong>Demo accounts</strong>
+              <div>User: user@test.com / user123</div>
+              <div>Theater: theater@test.com / theater123</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="userSection" class="d-none">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div><h2 class="mb-0">Now Showing</h2><small class="text-muted">Select a movie and book a seat.</small></div>
+        <button id="refreshMoviesBtn" class="btn btn-outline-primary">Refresh</button>
+      </div>
+      <div id="movieList" class="row g-4"></div>
+      <hr class="my-5">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Your Bookings</h3>
+        <button id="refreshBookingsBtn" class="btn btn-outline-secondary">Refresh</button>
+      </div>
+      <div id="bookingList"></div>
+    </section>
+
+    <section id="theaterSection" class="d-none">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div><h2 class="mb-0">Theater Dashboard</h2><small class="text-muted">Add, update and remove your movies.</small></div>
+        <button id="refreshTheaterBtn" class="btn btn-outline-primary">Refresh</button>
+      </div>
+
+      <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+          <h4 id="movieFormTitle">Add Movie</h4>
+          <form id="movieForm" class="row g-3">
+            <input id="editMovieId" type="hidden">
+            <div class="col-md-5"><label class="form-label">Title</label><input id="movieTitle" class="form-control" required></div>
+            <div class="col-md-3"><label class="form-label">Language</label><input id="movieLanguage" class="form-control" required></div>
+            <div class="col-md-2"><label class="form-label">Duration (min)</label><input id="movieDuration" type="number" min="1" class="form-control" required></div>
+            <div class="col-md-2 d-flex align-items-end"><button class="btn btn-primary w-100" id="movieSubmitBtn">Add Movie</button></div>
+            <div class="col-12">
+              <label class="form-label">Exactly 4 unique show times</label>
+              <div class="row g-2">
+                <div class="col-6 col-md-3"><input class="form-control show-time" type="time" required></div>
+                <div class="col-6 col-md-3"><input class="form-control show-time" type="time" required></div>
+                <div class="col-6 col-md-3"><input class="form-control show-time" type="time" required></div>
+                <div class="col-6 col-md-3"><input class="form-control show-time" type="time" required></div>
+              </div>
+            </div>
+            <div class="col-12"><button type="button" id="cancelEditBtn" class="btn btn-secondary d-none">Cancel Edit</button></div>
+          </form>
+        </div>
+      </div>
+      <div id="theaterMovieList" class="row g-4"></div>
+    </section>
+  </main>
+
+  <div class="modal fade" id="bookingModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="bookingForm">
+          <div class="modal-header"><h5 class="modal-title">Book Seat</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+          <div class="modal-body">
+            <input id="bookingMovieId" type="hidden">
+            <div class="mb-3"><label class="form-label">Movie</label><input id="bookingMovieTitle" class="form-control" readonly></div>
+            <div class="mb-3"><label class="form-label">Date</label><input id="bookingDate" type="date" class="form-control" required></div>
+            <div class="mb-3"><label class="form-label">Show Time</label><select id="bookingShowTime" class="form-select" required></select></div>
+            <div class="mb-3"><label class="form-label">Seat Number</label><input id="bookingSeat" class="form-control" required placeholder="A5"></div>
+            <small class="text-muted">The backend prevents duplicate booking for the same movie, date, show time and seat.</small>
+          </div>
+          <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary">Confirm Booking</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
